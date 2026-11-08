@@ -10,14 +10,14 @@ pipeline {
     stages {
         stage('1. Checkout SCM') {
             steps {
-                echo "===> Mengambil kode dari GitHub branch main..."
+                echo "===> Mengambil kode sumber dari branch main..."
                 checkout scm
             }
         }
 
         stage('2. Syntax Check') {
             steps {
-                echo "===> Memverifikasi sintaks kode Python..."
+                echo "===> Memverifikasi sintaks Python..."
                 sh 'python3 -m py_compile app.py'
             }
         }
@@ -35,34 +35,40 @@ pipeline {
 
         stage('4. Automated Deployment') {
             steps {
-                echo "===> Menjalankan stack via Docker Compose..."
-                sh """
-                    docker compose down || true
-                    docker compose up -d --build
-                """
+                echo "===> Menjalankan deployment kontainer backend..."
+                sh '''
+                    docker stop guestbook-backend || true
+                    docker rm guestbook-backend || true
+                    docker run -d \
+                        --name guestbook-backend \
+                        --network appnet \
+                        --network-alias backend \
+                        --restart unless-stopped \
+                        -e DATA_DIR=/data \
+                        -v guestbook-db-data:/data \
+                        guestbook-backend:latest
+                '''
             }
         }
 
         stage('5. Health Check') {
             steps {
-                echo "===> Memvalidasi kesehatan backend & frontend..."
+                echo "===> Memverifikasi kesehatan aplikasi..."
                 sleep 5
-                sh """
+                sh '''
                     docker exec guestbook-backend python -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/health').read().decode())"
-                    curl -fsS http://localhost:8081/health > /dev/null
-                    curl -fsS http://localhost:8081/api/messages > /dev/null
-                """
-                echo "===> Sistem LIVE dan Sehat pada Port 8081!"
+                '''
+                echo "===> Deployment SUKSES! Sistem Sehat dan Aktif!"
             }
         }
     }
 
     post {
         success {
-            echo "Pipeline CI/CD Berhasil! Aplikasi aktif dengan tag :${BUILD_NUMBER} dan :${GIT_COMMIT_SHORT}"
+            echo "Pipeline Berhasil! Image aktif dengan tag :${BUILD_NUMBER} dan :${GIT_COMMIT_SHORT}"
         }
         failure {
-            echo "Pipeline Gagal! Periksa log Jenkins di console output."
+            echo "Pipeline Gagal! Periksa riwayat log di Console Output."
         }
     }
 }
