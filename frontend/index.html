@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Buku Tamu Wisuda</title>
+<style>
+:root{--red:#c8102e;--red2:#9e0c24;--bg:#eeeff0;--card:rgba(240,242,245,.62);--ink:#12151a;--mute:#363b42;--line:rgba(55,62,72,.34);--soft:rgba(232,235,239,.55);--ok:#0b6b35;--off:#8f949c;--star:#f5b301;--sheet:rgba(226,229,233,.42);--grad:linear-gradient(135deg,#e5314b 0%,#b50d28 55%,#8a0a1f 100%);--grad-gray:linear-gradient(135deg,#8d929a,#5b5f66)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#4a4d54;color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,rgba(200,16,46,.7) 0%,rgba(110,114,122,.7) 55%,rgba(40,42,48,.7) 100%),url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat}
+h1,h2,h3,.clock b{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.top{position:relative;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='white' fill-opacity='.15'%3E%3Cg id='c'%3E%3Cpath d='M30 8l26 11-26 11L4 19z'/%3E%3Cpath d='M14 26v10c0 5 7 8 16 8s16-3 16-8V26l-16 7z'/%3E%3Cpath d='M54 20h2v16h-2z'/%3E%3Ccircle cx='55' cy='39' r='3'/%3E%3C/g%3E%3Cuse href='%23c' x='60' y='60'/%3E%3Ccircle cx='100' cy='20' r='3'/%3E%3Ccircle cx='20' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E") 0 0/84px 84px repeat,radial-gradient(circle at 10% -20%,rgba(255,255,255,.3),transparent 46%),radial-gradient(circle at 90% 130%,rgba(255,255,255,.2),transparent 42%),var(--grad);color:#fff;padding:14px 24px 20px;box-shadow:0 4px 18px rgba(0,0,0,.28)}
+.top::after{content:"";position:absolute;left:0;right:0;bottom:-17px;height:17px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='17' viewBox='0 0 36 17'%3E%3Crect width='36' height='3' fill='%23f5b301'/%3E%3Cpath d='M0 3H36A18 14 0 0 1 0 3Z' fill='%23b50d28'/%3E%3Cpath d='M5 3A13 9 0 0 0 31 3' fill='none' stroke='%23fff' stroke-opacity='.45' stroke-width='1.2'/%3E%3Cpath d='M18 8l2.6 2.6L18 13.2l-2.6-2.6z' fill='%23f5b301'/%3E%3C/svg%3E") 0 0/36px 17px repeat-x;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3))}
+.top-in{display:grid;grid-template-columns:1fr auto 1fr;grid-template-areas:"logo title clock";align-items:center;gap:16px}
+.logo{grid-area:logo;justify-self:start;background:#fff;border-radius:12px;padding:6px 12px;display:flex;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.logo img{height:44px;width:auto;display:block}
+.ttl{grid-area:title;text-align:center}
+.clock{grid-area:clock;justify-self:end;display:flex;flex-direction:column;align-items:center;gap:7px;padding:10px 14px 9px;border-radius:16px;background:linear-gradient(160deg,rgba(255,255,255,.24),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.4)}
+.ck-row{display:flex;align-items:center;gap:5px}
+.ck-row b{font:700 1.65rem/1 Georgia,"Iowan Old Style","Times New Roman",serif;min-width:2.1ch;text-align:center;padding:8px 7px;border-radius:9px;color:#fff;background:linear-gradient(180deg,rgba(40,12,18,.58),rgba(40,12,18,.38));font-variant-numeric:tabular-nums;box-shadow:inset 0 -2px 0 rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.25)}
+.ck-row i{font-style:normal;font-weight:700;font-size:1.3rem}
+.ck-row em{font-style:normal;font-size:.68rem;font-weight:700;margin-left:5px;padding:3px 8px;border-radius:99px;background:#fff;color:var(--red2)}
+.ck-date{font-size:.8rem;letter-spacing:.02em}
+@media (prefers-reduced-motion:no-preference){.ck-row i{animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:.2}}}
+.top h1{font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.15}
+.top p{margin:4px 0 0;opacity:.88}
+@media (max-width:760px){.top-in{grid-template-columns:1fr auto;grid-template-areas:"logo clock" "title title"}.clock{padding:7px 9px}.ck-row b{font-size:1.15rem;padding:5px 4px}.ck-row em{display:none}.ck-date{font-size:.7rem}}
+main{max-width:760px;margin:20px auto;padding:20px;background:var(--sheet);border-radius:16px;backdrop-filter:blur(5px) saturate(1.1);border:1px solid rgba(255,255,255,.4);box-shadow:0 10px 40px rgba(0,0,0,.25)}
+@media (max-width:800px){main{margin:12px;padding:14px}}
+.steps{display:flex;margin-bottom:18px;border-bottom:2px solid var(--line)}
+.steps a{flex:1;text-align:center;padding:10px 4px;color:var(--mute);text-decoration:none;font-weight:600;border-bottom:4px solid transparent;margin-bottom:-2px}
+.steps a[aria-current="step"]{color:var(--red2);border-bottom-color:var(--red)}
+.view{display:none}.view.on{display:block}
+@media (prefers-reduced-motion:no-preference){
+@keyframes inF{from{opacity:0;transform:translateX(90px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes inB{from{opacity:0;transform:translateX(-90px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes outF{to{opacity:0;transform:translateX(-90px) scale(.985)}}
+@keyframes outB{to{opacity:0;transform:translateX(90px) scale(.985)}}
+.view.in-fwd{animation:inF .4s cubic-bezier(.2,.7,.2,1) both}
+.view.in-back{animation:inB .4s cubic-bezier(.2,.7,.2,1) both}
+.view.out-fwd{animation:outF .2s ease-in both}
+.view.out-back{animation:outB .2s ease-in both}}
+.card{background:linear-gradient(180deg,var(--card),var(--soft));border:1px solid var(--line);border-radius:10px;padding:22px}
+.card h2{font-size:1.3rem;margin-bottom:4px}
+.lead{color:var(--mute);margin:0 0 16px}
+.roles{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--red);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.roles button{border:0;background:transparent;padding:12px 8px;cursor:pointer;font-weight:600;color:var(--red)}
+.roles button[aria-pressed="true"]{background:var(--grad);color:#fff}
+.f{margin-bottom:13px}
+.f label{display:flex;justify-content:space-between;font-weight:600;font-size:.9rem;margin-bottom:5px}
+.f input,.f textarea,.f select{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:7px;background:rgba(255,255,255,.82)}
+.f textarea{min-height:110px;resize:vertical}
+.f.ok input,.f.ok textarea,.f.ok select{border-color:var(--ok)}.f.bad input,.f.bad textarea,.f.bad select{border-color:var(--red)}
+.f.ok .mark{color:var(--ok)}.f.bad .mark{color:var(--red)}
+.mark{font-weight:800}
+.stars{display:flex;gap:2px}
+.stars button{border:0;background:none;font-size:2.2rem;line-height:1;cursor:pointer;color:var(--off);padding:0 2px}
+.stars button.on{color:var(--star);text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.pics{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pic{position:relative;width:100%;height:170px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic button{position:absolute;top:2px;right:2px;width:22px;height:22px;border:0;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;cursor:pointer;line-height:1}
+.btn{border:0;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer}
+.btn.main{background:var(--grad);color:#fff;width:100%;box-shadow:0 3px 10px rgba(181,13,40,.35)}.btn.main:hover{filter:brightness(.92)}
+.btn.ghost{background:var(--soft);border:1px solid var(--line)}
+.btn.add{background:var(--soft);border:1.5px dashed var(--mute);width:100%}
+.row{display:flex;gap:10px;margin-top:6px}.row .btn{flex:1}
+.who{background:linear-gradient(100deg,var(--soft),var(--card));border-left:5px solid var(--red);border-radius:8px;padding:12px 14px;margin-bottom:16px}
+.who.ortu{border-left-color:var(--mute)}
+.status{display:none;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:9px;margin-bottom:16px;border:1.5px solid;background:rgba(248,249,250,.93)}
+.status.show{display:flex}.status.ok{border-color:var(--ok)}.status.no{border-color:var(--red)}
+.status svg{flex:none;width:30px;height:30px}
+.status strong{display:block}.status ul{margin:4px 0 0;padding-left:18px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:5px 14px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.meta{color:var(--mute);font-size:.88rem}
+.entry{border:1px solid var(--line);border-left:5px solid var(--red);border-radius:10px;background:var(--card);padding:16px;margin-bottom:12px}
+.entry.ortu{border-left-color:var(--mute)}
+.entry h3{font-size:1.1rem}
+.role{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--grad);color:#fff;margin-bottom:4px}
+.ortu .role{background:var(--grad-gray)}
+.rate{color:var(--star);text-shadow:0 1px 2px rgba(0,0,0,.3);letter-spacing:2px;font-size:1.1rem;margin:8px 0 2px}.rate i{font-style:normal;color:var(--off)}
+.entry p{margin:6px 0 10px;white-space:pre-wrap;overflow-wrap:anywhere}
+.shots{margin-bottom:10px}
+.shots img{width:100%;max-height:320px;aspect-ratio:16/10;object-fit:cover;border-radius:12px;display:block}
+.ef{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--mute);border-top:1px solid var(--line);padding-top:10px}
+.okb{color:var(--ok);font-weight:700}.nob{color:var(--red);font-weight:700}
+.act{display:flex;gap:8px}
+.del,.go{border:1.5px solid var(--red);background:transparent;color:var(--red);border-radius:7px;padding:5px 12px;font-weight:600;cursor:pointer}
+.del:hover,.go:hover{background:var(--red);color:#fff}
+.empty{text-align:center;padding:36px 16px;color:var(--mute);border:2px dashed var(--line);border-radius:10px}
+dialog{border:1px solid var(--line);border-radius:12px;background:#e8eaed;color:var(--ink);max-width:400px;padding:22px}
+.dact{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}.dact .btn{width:auto}
+dialog::backdrop{background:rgba(15,16,20,.55);backdrop-filter:blur(6px)}
+.float{max-width:580px;margin:4px auto 0;border-radius:22px;background:rgba(238,240,243,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.55);box-shadow:0 24px 70px rgba(0,0,0,.4)}
+.fw{padding:26px 28px 24px}
+.fh{margin-bottom:16px}.fh h3{font-size:1.5rem}
+@media (prefers-reduced-motion:no-preference){.status.show{animation:pop .25s ease-out}@keyframes pop{from{transform:scale(.97);opacity:0}}}
+.chrome{max-width:760px;margin:36px auto 0;padding:0 20px}
+.chrome .steps{margin:0;padding:0 10px;background:var(--sheet);border:1px solid rgba(255,255,255,.4);border-radius:14px;backdrop-filter:blur(5px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.chrome .steps a{margin-bottom:0}
+.chrome .status{margin:10px 0 0}
+#stage{overflow-x:clip}
+main.view{margin:14px auto 24px}
+.entry{border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);backdrop-filter:blur(4px)}
+@media (max-width:800px){.chrome{padding:0 12px}main.view{margin:12px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="logo"><img src="logo.png" alt="Telkom University"></div>
+  <div class="ttl"><h1>Buku Tamu Wisuda</h1></div>
+  <div class="clock" role="timer" aria-label="Waktu saat ini">
+    <div class="ck-row"><b id="hh">00</b><i>:</i><b id="mm">00</b><i>:</i><b id="ss">00</b><em id="tz">WIB</em></div>
+    <div class="ck-date" id="date"></div>
+  </div>
+</div></header>
+<div class="chrome">
+  <nav class="steps" aria-label="Langkah">
+    <a href="#identitas" data-p="identitas">1. Identitas</a>
+    <a href="#review" data-p="review">2. Review dan rating</a>
+    <a href="#daftar" data-p="daftar">3. Daftar review</a>
+  </nav>
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+</div>
+
+<div id="stage">
+  <!-- Halaman 1: Identitas -->
+  <main class="view" id="v-identitas">
+    <form class="card" id="fid" novalidate>
+      <h2>Isi identitas</h2>
+      <p class="lead">Setelah disimpan, Anda langsung masuk ke halaman review dan rating.</p>
+      <div class="roles" role="group" aria-label="Pilih peran">
+        <button type="button" id="r-ortu" aria-pressed="false">Orang Tua</button>
+        <button type="button" id="r-mhs" aria-pressed="true">Mahasiswa</button>
+      </div>
+      <div id="fields"></div>
+      <button class="btn main" type="submit">Simpan identitas</button>
+    </form>
+  </main>
+
+  <!-- Halaman 2: Review dan Rating -->
+  <main class="view" id="v-review">
+    <div class="card">
+      <div class="fh" id="who"></div>
+      <form id="frv" novalidate>
+        <div class="f" id="f-review"><label for="review">Review <span class="mark"></span></label>
+          <textarea id="review" placeholder="Ceritakan momen wisuda yang paling berkesan"></textarea></div>
+        <div class="f"><label>Foto kenangan <span class="meta">maks. 1 foto</span></label>
+          <input type="file" id="file" accept="image/*" hidden>
+          <button type="button" class="btn add" id="addpic">Tambah foto</button>
+          <div class="pics" id="pics"></div></div>
+        <div class="f" id="f-rate"><label>Rating <span class="mark"></span></label>
+          <div class="stars" id="stars" role="radiogroup" aria-label="Rating 1 sampai 5"></div></div>
+        <div class="row">
+          <button class="btn ghost" type="button" id="back">‹ Kembali ke Identitas</button>
+          <button class="btn main" type="submit">Kirim review</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Halaman 3: Daftar Review -->
+  <main class="view" id="v-daftar">
+    <a class="btn main" href="#identitas" style="display:block;text-align:center;text-decoration:none;margin-bottom:14px">Tulis review baru</a>
+    <div class="bar"><div class="chips" id="chips"></div><div class="meta" id="avg"></div></div>
+    <div id="list"></div>
+  </main>
+</div>
+
+<!-- Modal Konfirmasi Hapus Data -->
+<dialog id="dlg">
+  <h3>Hapus semua data?</h3>
+  <p id="dtext" class="meta" style="font-size:.95rem"></p>
+  <div class="dact"><button class="btn ghost" id="dno" type="button">Batal</button><button class="btn main" id="dyes" type="button" style="background:var(--red)">Hapus permanen</button></div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}};
+const KEY='wisuda:data',ME='wisuda:me',CUR='wisuda:cur';
+let me=store.get(ME);if(!me){me='u'+Math.random().toString(36).slice(2,10);store.set(ME,me)}
+let cur=store.get(CUR)||null;
+let data=[];try{data=JSON.parse(store.get(KEY)||'null')||[]}catch(e){}
+data=data.filter(d=>d.owner!=='demo');
+const persist=()=>store.set(KEY,JSON.stringify(data));
+
+// === 1. SINKRONISASI DATA DARI SERVER BACKEND ===
+async function syncServerData(){
+  try{
+    const res=await fetch('/api/messages');
+    if(res.ok){
+      const sData=await res.json();
+      if(Array.isArray(sData)&&sData.length>0){
+        data=sData;persist();
+        if(location.hash==='#daftar')renderList();
+      }
+    }
+  }catch(e){}
+}
+syncServerData();
+
+const setCur=v=>{cur=v;store.set(CUR,v||'')};
+const getCur=()=>data.find(d=>d.id===cur&&!d.done);
+const ROLE={
+  ortu:[['nama','Nama orang tua','text'],['mhs','Nama mahasiswa','text'],['fak','Fakultas mahasiswa','fak']],
+  mhs:[['nama','Nama lengkap','text'],['nim','NIM','nim'],['fak','Fakultas','fak'],['prodi','Program studi','prodi']]};
+const LBL={nama:'nama',mhs:'nama mahasiswa',nim:'NIM',fak:'fakultas',prodi:'program studi'};
+const PRODI={
+ 'Fakultas Teknik Elektro':['S1 Teknik Telekomunikasi','S1 Teknik Elektro','S1 Teknik Fisika','S1 Sistem Komputer / Teknik Komputer','S1 Smart Science & Technology','S1 Teknik Biomedis','S1 Electrical Energy Engineering'],
+ 'Fakultas Ekonomi dan Bisnis':['S1 Manajemen / Bisnis Telekomunikasi dan Informatika','S1 Akuntansi','S1 Administrasi Bisnis','S1 Bisnis Digital'],
+ 'Fakultas Komunikasi dan Keilmuan Sosial':['S1 Ilmu Komunikasi','S1 Digital Public Relations','S1 Psikologi (Digital Psychology)'],
+ 'Fakultas Kedokteran':['S1 Pendidikan Dokter'],
+ 'Fakultas Industri Kreatif':['S1 Desain Komunikasi Visual (DKV)','S1 Desain Produk','S1 Desain Interior','S1 Kriya Tekstil dan Fashion','S1 Seni Rupa','S1 Film dan Animasi','S1 Teknologi Pangan'],
+ 'Fakultas Ilmu Terapan':['D3 Teknologi Telekomunikasi','D3 Teknologi Komputer','D3 Sistem Informasi','D3 Sistem Informasi Akuntansi','D3 Rekayasa Perangkat Lunak Aplikasi','D3 Manajemen Pemasaran (Digital Marketing)','D3 Perhotelan','S1 Terapan Digital Creative Multimedia'],
+ 'Fakultas Rekayasa Industri':['S1 Teknik Industri','S1 Sistem Informasi','S1 Teknik Logistik','S1 Manajemen Rekayasa Industri'],
+ 'Fakultas Informatika':['S1 Informatika (Teknik Informatika)','S1 Teknologi Informasi','S1 Rekayasa Perangkat Lunak','S1 Sains Data']};
+let role='mhs',rating=0,photos=[],filter='all',delId=null,rvFor=null;
+
+/* Jam Digital Real-time */
+const p2=n=>String(n).padStart(2,'0');
+function tick(){const d=new Date(),o=-d.getTimezoneOffset()/60;
+  $('#hh').textContent=p2(d.getHours());$('#mm').textContent=p2(d.getMinutes());$('#ss').textContent=p2(d.getSeconds());
+  $('#tz').textContent={7:'WIB',8:'WITA',9:'WIT'}[o]||'UTC'+(o>=0?'+':'')+o;
+  $('#date').textContent=d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+tick();setInterval(tick,1000);
+
+/* Status Toast Notification */
+const IC={ok:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#17894a"/><path d="M9 16.5l5 5 9-10" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ no:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#c8102e"/><path d="M10.5 10.5l11 11M21.5 10.5l-11 11" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>'};
+let st;function status(type,title,items){const el=$('#status');el.className='status show '+type;
+  el.innerHTML=IC[type]+'<div><strong>'+esc(title)+'</strong>'+(items&&items.length?'<ul>'+items.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul>':'')+'</div>';
+  clearTimeout(st);st=setTimeout(()=>el.className='status',7000)}
+function mark(id,ok){const f=$('#f-'+id);f.classList.toggle('ok',ok);f.classList.toggle('bad',!ok);f.querySelector('.mark').textContent=ok?'✓':'✗'}
+function clearMarks(){document.querySelectorAll('.f').forEach(f=>{f.classList.remove('ok','bad');const m=f.querySelector('.mark');if(m)m.textContent=''})}
+
+/* Halaman 1: Identitas */
+const opts=(a,sel,ph)=>'<option value="">'+ph+'</option>'+a.map(x=>'<option'+(x===sel?' selected':'')+'>'+esc(x)+'</option>').join('');
+const prodiPh=f=>f?'Pilih program studi':'Pilih fakultas terlebih dahulu';
+function renderId(init){
+  const d=getCur();if(init&&d)role=d.role;
+  $('#fields').innerHTML=ROLE[role].map(([k,l,t])=>{
+    const v=d&&d[k]||'';let c;
+    if(t==='fak')c='<select id="i-fak">'+opts(Object.keys(PRODI),v,'Pilih fakultas')+'</select>';
+    else if(t==='prodi')c='<select id="i-prodi">'+opts(PRODI[d&&d.fak]||[],v,prodiPh(d&&d.fak))+'</select>';
+    else c='<input id="i-'+k+'" value="'+esc(v)+'"'+(t==='nim'?' inputmode="numeric"':'')+' autocomplete="off">';
+    return '<div class="f" id="f-'+k+'"><label for="i-'+k+'">'+l+' <span class="mark"></span></label>'+c+'</div>'}).join('');
+  ['ortu','mhs'].forEach(r=>$('#r-'+r).setAttribute('aria-pressed',r===role));
+  $('#fields').oninput=e=>{
+    if(e.target.id==='i-fak'&&$('#i-prodi')){$('#i-prodi').innerHTML=opts(PRODI[e.target.value]||[],'',prodiPh(e.target.value));$('#f-prodi').classList.remove('ok','bad');$('#f-prodi .mark').textContent=''}
+    const f=e.target.closest('.f');if(f&&f.classList.contains('bad'))checkId(f.id.slice(2))}}
+function checkId(k){const v=$('#i-'+k).value.trim();let ok=v.length>0,msg=ok?null:((k==='fak'||k==='prodi'?'Pilih ':'Isi ')+LBL[k]);
+  if(ok&&k==='nim'&&!/^\d{5,15}$/.test(v)){ok=false;msg='NIM harus berupa 5 sampai 15 angka'}
+  mark(k,ok);return msg}
+['ortu','mhs'].forEach(r=>$('#r-'+r).onclick=()=>{role=r;renderId()});
+$('#fid').onsubmit=e=>{e.preventDefault();
+  const errs=ROLE[role].map(([k])=>checkId(k)).filter(Boolean);
+  if(errs.length)return status('no','Identitas tidak masuk. Lengkapi dulu:',errs);
+  let o=getCur();
+  if(!o){o={id:'e'+Date.now(),owner:me,done:false,review:'',rating:0,photos:[],at:Date.now()};data.unshift(o)}
+  ['nama','mhs','nim','fak','prodi'].forEach(k=>delete o[k]);
+  o.role=role;ROLE[role].forEach(([k])=>o[k]=$('#i-'+k).value.trim());
+  setCur(o.id);
+  const sv=persist();location.hash='#review';
+  sv?status('ok','Identitas berhasil terdata.'):status('no','Identitas tampil, tetapi belum tersimpan permanen.',['Penyimpanan peramban tidak tersedia.'])};
+
+/* Halaman 2: Review dan Rating */
+function whoHtml(d){return '<span class="role">'+(d.role==='mhs'?'Mahasiswa':'Orang tua')+'</span><h3>'+esc(d.nama)+'</h3><div class="meta">'+
+  (d.role==='mhs'?'NIM '+esc(d.nim||'-')+', '+esc(d.prodi||'-')+', Fakultas '+esc(d.fak||d.instansi||'-'):'Orang tua dari '+esc(d.mhs||'-')+', Fakultas '+esc(d.fak||d.instansi||'-'))+'</div>'}
+function renderRv(){const d=getCur();
+  $('#who').className='fh '+d.role;$('#who').innerHTML=whoHtml(d)+'<div class="okb">✓ Identitas terdata</div>';
+  if(rvFor!==d.id){rvFor=d.id;rating=0;photos=[];$('#review').value='';clearMarks();setStars();renderPics()}}
+function setStars(){$('#stars').innerHTML=[1,2,3,4,5].map(n=>'<button type="button" role="radio" aria-checked="'+(n===rating)+'" aria-label="'+n+' bintang" data-n="'+n+'" class="'+(n<=rating?'on':'')+'">★</button>').join('')}
+$('#stars').onclick=e=>{const b=e.target.closest('button');if(!b)return;rating=+b.dataset.n;setStars();mark('rate',true)};
+$('#review').oninput=()=>{if($('#f-review').classList.contains('bad'))checkRv()};
+function checkRv(){const ok=$('#review').value.trim().length>0;mark('review',ok);return ok?null:'Isi review'}
+function shrink(file){return new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
+  const s=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.72))};im.src=r.result};r.readAsDataURL(file)})}
+function renderPics(){$('#pics').innerHTML=photos.map((p,i)=>'<div class="pic"><img src="'+p+'" alt="Foto '+(i+1)+'"><button type="button" data-i="'+i+'" aria-label="Hapus foto '+(i+1)+'">×</button></div>').join('');
+  $('#addpic').textContent=photos.length?'Ganti foto':'Tambah foto'}
+$('#addpic').onclick=()=>$('#file').click();
+$('#file').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const bad=[];
+  if(!f.type.startsWith('image/'))bad.push(f.name+' bukan gambar');
+  else try{photos=[await shrink(f)]}catch(_){bad.push(f.name+' gagal dibaca')}
+  renderPics();if(bad.length)status('no','Foto tidak masuk',bad)};
+$('#pics').onclick=e=>{const b=e.target.closest('button');if(b){photos.splice(+b.dataset.i,1);renderPics()}};
+$('#back').onclick=()=>{location.hash='#identitas'};
+
+// === 2. PENGIRIMAN DATA REVIEW KE BACKEND VIA FETCH POST ===
+$('#frv').onsubmit=async e=>{e.preventDefault();const d=getCur();
+  if(!d)return route();
+  const errs=[checkRv()].filter(Boolean);
+  if(!rating){mark('rate',false);errs.push('Pilih rating 1 sampai 5 bintang')}
+  if(errs.length)return status('no','Review tidak masuk. Lengkapi dulu:',errs);
+  Object.assign(d,{review:$('#review').value.trim(),rating,photos:photos.slice(),done:true,at:Date.now()});
+  try{
+    await fetch('/api/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        id:d.id,nama:d.nama,role:d.role,nim:d.nim||'',prodi:d.prodi||'',mhs:d.mhs||'',
+        instansi:d.fak||'',fak:d.fak||'',pesan:d.review,review:d.review,rating:d.rating,
+        photos:d.photos,done:true,at:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})
+      })
+    });
+  }catch(e){}
+  setCur(null);rvFor=null;filter='all';
+  const sv=persist();syncServerData();location.hash='#daftar';
+  sv?status('ok','Review dan rating berhasil terdata.',['Terima kasih.']):status('no','Review tampil, tetapi belum tersimpan permanen.',['Penyimpanan penuh atau tidak tersedia. Kurangi ukuran foto.'])};
+
+/* Halaman 3: Daftar Review */
+const fmt=t=>new Date(t).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+function renderList(){
+  $('#chips').innerHTML=[['all','Semua'],['mhs','Mahasiswa'],['ortu','Orang tua']].map(([k,l])=>'<button type="button" data-k="'+k+'" aria-pressed="'+(filter===k)+'">'+l+'</button>').join('');
+  const rows=data.filter(d=>d.done&&(filter==='all'||d.role===filter));
+  const rv=rows.filter(d=>d.done);
+  $('#avg').textContent=rv.length+' review, rata-rata '+(rv.length?(rv.reduce((a,d)=>a+d.rating,0)/rv.length).toFixed(1):'0')+' dari 5';
+  $('#list').innerHTML=rows.length?rows.map(d=>{
+    return '<article class="entry '+d.role+'">'+whoHtml(d)+
+     (d.done?'<div class="rate" aria-label="Rating '+d.rating+' dari 5">'+'★'.repeat(d.rating)+'<i>'+'★'.repeat(5-d.rating)+'</i></div><p>'+esc(d.review||d.pesan||'')+'</p>'+
+      (d.photos&&d.photos.length?'<div class="shots">'+d.photos.slice(0,1).map((p,i)=>'<img src="'+p+'" alt="Foto kenangan '+(i+1)+' dari '+esc(d.nama)+'">').join('')+'</div>':'')
+     :'<p class="nob">✗ Review dan rating belum diisi</p>')+
+     '<div class="ef"><span>'+(d.done?'<span class="okb">✓ Terdata</span> pada '+fmt(d.at):'Menunggu review')+'</span>'+
+     '<span class="act">'+(d.done?'':'<button class="go" data-id="'+d.id+'">Lanjutkan review</button>')+'<button class="del" data-id="'+d.id+'">Hapus data</button></span></div></article>'}).join('')
+   :'<div class="empty">Belum ada review di kategori ini. Mulai dari halaman identitas.</div>'}
+$('#chips').onclick=e=>{const b=e.target.closest('button');if(b){filter=b.dataset.k;renderList()}};
+
+// === 3. FITUR HAPUS REAL-TIME SEKALI KLIK ===
+$('#list').onclick=e=>{const g=e.target.closest('.go'),b=e.target.closest('.del');
+  if(g){const d=data.find(x=>String(x.id)===String(g.dataset.id));if(d){setCur(d.id);location.hash='#review'}return}
+  if(!b)return;const d=data.find(x=>String(x.id)===String(b.dataset.id));
+  if(!d)return status('no','Data tidak ditemukan');
+  delId=d.id;$('#dtext').textContent='Identitas, ulasan, foto, dan rating atas nama "'+d.nama+'" (ID: '+d.id+') akan dihapus permanen dari server.';$('#dlg').showModal()};
+$('#dno').onclick=()=>$('#dlg').close();
+
+$('#dyes').onclick=async ()=>{const d=data.find(x=>String(x.id)===String(delId));$('#dlg').close();
+  if(!d)return status('no','Data tidak ditemukan');
+  try{
+    const res=await fetch('/api/messages/'+delId,{method:'DELETE'});
+    if(!res.ok){await fetch('/api/messages?index='+delId,{method:'DELETE'});}
+  }catch(e){}
+  data=data.filter(x=>String(x.id)!==String(delId));if(cur===delId)setCur(null);persist();syncServerData();renderList();
+  status('ok','Data berhasil dihapus permanen.',['Semua data kunjungan atas nama "'+d.nama+'" telah dibersihkan.'])};
+
+/* Perpindahan Halaman */
+const ORDER={identitas:0,review:1,daftar:2},REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let shown=null,navT;
+function show(v){
+  clearTimeout(navT);
+  const nx=$('#v-'+v),old=shown&&shown!==v?$('#v-'+shown):null,dir=shown&&ORDER[v]<ORDER[shown]?'back':'fwd';
+  document.querySelectorAll('.view').forEach(x=>{if(x!==old&&x!==nx)x.className='view'});
+  const enter=()=>{if(old)old.className='view';nx.className='view on in-'+dir};
+  if(old&&!REDUCE){old.className='view on out-'+dir;navT=setTimeout(enter,200)}else enter();
+  shown=v}
+function route(){let h=location.hash.slice(1);if(!['identitas','review','daftar'].includes(h))h='identitas';
+  if(h==='review'&&!getCur()){h='identitas';history.replaceState(null,'','#identitas');status('no','Isi identitas dulu',['Review hanya bisa ditulis setelah identitas terdata.'])}
+  document.querySelectorAll('.steps a').forEach(a=>a.dataset.p===h?a.setAttribute('aria-current','step'):a.removeAttribute('aria-current'));
+  if(h==='identitas')renderId(true);if(h==='review')renderRv();if(h==='daftar')renderList();
+  show(h);window.scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>

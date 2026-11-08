@@ -1,0 +1,14 @@
+.git
+.gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+*.tmp
+.env
+data/
+*.json
+README.md
+Jenkinsfile
+docker-compose.yml
+nginx.conf
+frontend/
